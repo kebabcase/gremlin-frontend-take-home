@@ -3,11 +3,14 @@ import {
   LoaderFunctionArgs,
   useLoaderData,
   useNavigation,
+  useSearchParams,
 } from "react-router-dom";
-import { cn } from "../utils/misc";
+import { useCallback, useState } from "react";
 import invariant from "tiny-invariant";
+import { cn } from "../utils/misc";
 import { Spinner } from "components/spinner";
-import { type NPMPackage, PackageListItem } from "components/package-list-item";
+import { type NPMPackage } from "components/package-list-item";
+import { SearchResults } from "components/search-results";
 
 async function getNPMPackages(q: string) {
   let url = "https://api.npms.io/v2/search/suggestions";
@@ -44,6 +47,23 @@ export async function loader({
 function Index() {
   const { q, searchResults } = useLoaderData() as LoaderData;
   const navigation = useNavigation();
+  const [, setSearchParams] = useSearchParams();
+
+  const [valueChange, setValueChange] = useState<NodeJS.Timeout | null>(null);
+
+  const handleValueChange = useCallback(
+    (value: string) => {
+      if (valueChange != null) clearTimeout(valueChange);
+
+      setValueChange(
+        setTimeout(() => {
+          setSearchParams({ q: value });
+          setValueChange(null);
+        }, 150)
+      );
+    },
+    [valueChange, setSearchParams]
+  );
 
   return (
     <main className="flex flex-col h-full w-full overflow-hidden">
@@ -51,14 +71,14 @@ function Index() {
         <Form id="search-form" role="search">
           <input
             id="q"
+            data-testid="search-input-field"
             aria-label="Search NPM packages"
             placeholder="Search"
             type="search"
             name="q"
             defaultValue={q ?? undefined}
+            onChange={(e) => handleValueChange(e.target.value)}
           />
-          <div id="search-spinner" aria-hidden hidden={true} />
-          <div className="sr-only" aria-live="polite"></div>
         </Form>
       </header>
       <section
@@ -72,14 +92,7 @@ function Index() {
             <Spinner className="h-16 w-16" />
           </div>
         ) : (
-          <>
-            {searchResults.map((npmPackage) => (
-              <PackageListItem
-                key={npmPackage.highlight}
-                npmPackage={npmPackage}
-              />
-            ))}
-          </>
+          <SearchResults q={q} searchResults={searchResults} />
         )}
       </section>
     </main>
