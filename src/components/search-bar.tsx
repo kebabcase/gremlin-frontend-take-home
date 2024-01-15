@@ -33,6 +33,7 @@ export function SearchBar({ q }: Props) {
         placeholder="Search"
         type="search"
         name="q"
+        className="dark:bg-[#323232]"
         defaultValue={q ?? undefined}
         onChange={(e) => handleValueChange(e.target.value)}
       />

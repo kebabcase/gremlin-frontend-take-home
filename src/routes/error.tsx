@@ -5,12 +5,15 @@ export default function ErrorPage() {
   console.error(error);
 
   return (
-    <div id="error-page" className="flex flex-col h-full w-full">
+    <div
+      id="error-page"
+      className="flex flex-col h-full w-full dark:bg-[#323232] dark:text-[#f7f7f7]"
+    >
       <div className="h-[50px]">
         <NavLink to="/">
           <button
             role="button"
-            className="p-4 rounded hover:cursor-pointer hover:bg-[#f7f7f7]"
+            className="p-4 rounded hover:cursor-pointer hover:bg-[#f7f7f7] dark:hover:bg-[#121212]"
           >
             &larr; Back
           </button>

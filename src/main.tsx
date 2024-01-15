@@ -6,6 +6,7 @@ import ErrorPage from "./routes/error";
 import { action as failApiAction } from "./routes/index.fail-api";
 
 import "./index.css";
+import { CookiesProvider } from "react-cookie";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <CookiesProvider>
+      <RouterProvider router={router} />
+    </CookiesProvider>
   </React.StrictMode>
 );

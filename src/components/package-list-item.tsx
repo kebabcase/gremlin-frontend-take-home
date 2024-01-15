@@ -56,7 +56,7 @@ interface Props {
 export function PackageListItem({ npmPackage }: Props) {
   return (
     <Link
-      className="flex flex-col border rounded p-4"
+      className="flex flex-col border rounded p-4 hover:bg-[#f7f7f7] dark:hover:bg-[#121212]"
       to={npmPackage.package.links.npm}
       target="_blank"
       rel="noopener noreferrer"
