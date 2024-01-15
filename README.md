@@ -27,10 +27,9 @@ You may use any pattern or library that you find suitable to accomplish this tas
 - Proper use of React APIs.
 - Clean, well-commented code. We prefer clarity over cleverness.
 
-
 ## React
 
-You may use whatever patterns and state management you prefer while working on this. The choice of libraries and state management patterns is not as important as a functioning project. 
+You may use whatever patterns and state management you prefer while working on this. The choice of libraries and state management patterns is not as important as a functioning project.
 
 ## Extra Credit
 
