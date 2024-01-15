@@ -4,7 +4,6 @@ import {
   useNavigation,
 } from "react-router-dom";
 import invariant from "tiny-invariant";
-import { cn } from "../utils/misc";
 import { Spinner } from "components/spinner";
 import { type NPMPackage } from "components/package-list-item";
 import { SearchResults } from "components/search-results";
@@ -64,12 +63,7 @@ function Index() {
         <SearchBar q={q} />
         <FailButton />
       </header>
-      <section
-        className={cn(
-          "flex flex-col flex-1 h-full w-full gap-4 p-4 overflow-y-auto",
-          navigation.state === "loading" ? "loading" : ""
-        )}
-      >
+      <section className="flex flex-col flex-1 h-full w-full gap-4 p-4 overflow-y-auto">
         {navigation.state === "loading" ? (
           <div className="flex h-full w-full items-center justify-center">
             <Spinner className="h-16 w-16" />
