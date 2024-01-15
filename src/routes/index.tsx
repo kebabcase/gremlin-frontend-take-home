@@ -1,16 +1,15 @@
 import {
-  Form,
   LoaderFunctionArgs,
   useLoaderData,
   useNavigation,
-  useSearchParams,
 } from "react-router-dom";
-import { useCallback, useState } from "react";
 import invariant from "tiny-invariant";
 import { cn } from "../utils/misc";
 import { Spinner } from "components/spinner";
 import { type NPMPackage } from "components/package-list-item";
 import { SearchResults } from "components/search-results";
+import { SearchBar } from "components/search-bar";
+import { FailButton } from "components/fail-button";
 
 async function getNPMPackages(q: string) {
   let url = "https://api.npms.io/v2/search/suggestions";
@@ -47,39 +46,12 @@ export async function loader({
 function Index() {
   const { q, searchResults } = useLoaderData() as LoaderData;
   const navigation = useNavigation();
-  const [, setSearchParams] = useSearchParams();
-
-  const [valueChange, setValueChange] = useState<NodeJS.Timeout | null>(null);
-
-  const handleValueChange = useCallback(
-    (value: string) => {
-      if (valueChange != null) clearTimeout(valueChange);
-
-      setValueChange(
-        setTimeout(() => {
-          setSearchParams({ q: value });
-          setValueChange(null);
-        }, 150)
-      );
-    },
-    [valueChange, setSearchParams]
-  );
 
   return (
     <main className="flex flex-col h-full w-full overflow-hidden">
-      <header className="h-fit p-4">
-        <Form id="search-form" role="search">
-          <input
-            id="q"
-            data-testid="search-input-field"
-            aria-label="Search NPM packages"
-            placeholder="Search"
-            type="search"
-            name="q"
-            defaultValue={q ?? undefined}
-            onChange={(e) => handleValueChange(e.target.value)}
-          />
-        </Form>
+      <header className="flex h-fit p-4 gap-4">
+        <SearchBar q={q} />
+        <FailButton />
       </header>
       <section
         className={cn(

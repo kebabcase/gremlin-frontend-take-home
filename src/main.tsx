@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Index, { loader as rootLoader } from "./routes/index";
 import ErrorPage from "./routes/error";
+import { action as failApiAction } from "./routes/index.fail-api";
 
 import "./index.css";
 
@@ -12,6 +13,12 @@ const router = createBrowserRouter([
     element: <Index />,
     errorElement: <ErrorPage />,
     loader: rootLoader,
+    children: [
+      {
+        path: "/fail-api",
+        action: failApiAction,
+      },
+    ],
   },
 ]);
 
